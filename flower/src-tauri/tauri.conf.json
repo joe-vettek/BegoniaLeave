@@ -1,0 +1,60 @@
+{
+	"build": {
+		"devPath": "../src",
+		"distDir": "../src",
+		"withGlobalTauri": true
+	},
+	"package": {
+		"productName": "flower",
+		"version": "0.0.0"
+	},
+	"tauri": {
+		"allowlist": {
+			"all": false,
+			"dialog": {
+				"all": false,
+				"confirm": true
+			},
+			"app": {
+				"all": true
+			},
+			"window": {
+				"all": false,
+				"close": true
+			},
+			"shell": {
+				"all": false,
+				"open": true
+			},
+			"http": {
+				"all": true,
+				"request": true,
+				"scope": [
+					"http://127.0.0.1*"
+				]
+			}
+		},
+		"windows": [
+			{
+				"title": "flower",
+				"width": 800,
+				"height": 600
+			}
+		],
+		"security": {
+			"csp": null
+		},
+		"bundle": {
+			"active": true,
+			"targets": "all",
+			"identifier": "com.xueluoanping.flower",
+			"icon": [
+				"icons/32x32.png",
+				"icons/128x128.png",
+				"icons/128x128@2x.png",
+				"icons/icon.icns",
+				"icons/icon.ico"
+			]
+		}
+	}
+}

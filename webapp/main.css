@@ -1,0 +1,117 @@
+body {
+	margin: 8px;
+	/* background-color: #ececec; */
+	border-radius: 10px;
+}
+
+.box {
+	margin: 5px;
+	/* border: 1px solid #abaa90; */
+	background-color: #fafafa;
+	border-radius: 10px;
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.row-3 {
+	width: 33%;
+}
+
+.row-2 {
+	width: 40%;
+}
+
+.box-in {
+	margin: 5px;
+	/* border: 1px solid #403f36; */
+	/* padding: 2px; */
+	border-radius: 3px;
+}
+
+.padding-2 {
+	/* margin: 5px; */
+	padding: 2px;
+}
+
+.flex-warp {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.text-center {
+	text-align: center;
+}
+
+#start,
+.box-in.row-2.text-center,
+input {
+	cursor: pointer;
+}
+
+
+
+#log-area {
+	align-self: flex-start;
+	max-height: 239px;
+	overflow-y: auto;
+}
+
+#log-area>div:nth-child(2n+1) {
+	width: 35%;
+	padding: 1px;
+}
+
+#log-area>div:nth-child(2n) {
+	width: 60%;
+	padding: 1px;
+}
+
+.char {
+	position: absolute;
+	left: calc(50% + 160px);
+	height: 75px;
+	top: 20px;
+	z-index: 1;
+}
+
+h2 {
+	width: 100%;
+	text-align: center;
+	z-index: 2;
+}
+
+
+body {
+	background: inherit;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	/* box-shadow: inset 0 0 0 3000px rgba(255, 255, 255, 0.3); */
+	/* filter: blur(10px); */
+	/* backdrop-filter: blur(6px); */
+}
+
+body {
+	/* 海棠红 */
+	background-color: #ffe9ed;
+}
+
+.box {
+	background-color: #f0c9cf;
+}
+
+.box-in {
+	background-color: #e77c8e;
+}
+
+.row-3>.box-in>.padding-2>div:hover {
+	background-color: #ee2746;
+}
+
+.box-in.text-center{
+	background-color: #f03752;
+}

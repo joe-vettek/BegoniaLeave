@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./main.js"></script>
+		<link rel="stylesheet" href="./main.css">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	</head>
+	<body>
+		<div class="box">
+			<img class="char" src="./char.png"/>
+			<h2 > 海棠叶 - 白夜极光自动化助手</h2>
+			<div class="row-3">
+				<div class="box-in">
+					<div class="padding-2">
+						<div><input type="checkbox" id="login-restart" name="checkbox" value="option1">
+							<label for="checkbox">启动连接</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-mail" name="checkbox" value="option1">
+							<label for="checkbox">领取邮件</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-explore" name="checkbox" value="option1">
+							<label for="checkbox">收获和探险</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-battle" name="checkbox" value="option1">
+							<label for="checkbox">刷体力</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-shop" name="checkbox" value="option1">
+							<label for="checkbox">随机购物</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-quest" name="checkbox" value="option1">
+							<label for="checkbox">领取任务</label>
+						</div>
+						<div>
+							<input type="checkbox" id="daily-book" name="checkbox" value="option1">
+							<label for="checkbox">领取通行证任务</label>
+						</div>
+						<div>
+							<input type="checkbox" id="battle-huangdian" name="checkbox" value="option1">
+							<label for="checkbox">自动荒典</label>
+						</div>
+					</div>
+					<div class="padding-2 flex-warp">
+						<div class="box-in row-2  text-center" id="select-all">全选</div>
+						<div class="box-in row-2  text-center" id="select-clear">清空</div>
+					</div>
+				</div>
+				<div class="box-in text-center" id="start">启动</div>
+			</div>
+			<div class="row-3" ><span onclick="fetch('/close')">待施工（测试区，请勿点击）</span></div>
+			<div class="row-3 flex-warp" id="log-area"></div>
+		</div>
+
+	</body>
+</html>
