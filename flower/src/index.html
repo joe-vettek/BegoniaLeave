@@ -97,7 +97,8 @@
 				// 必须设置随机参数以免无法刷新，而且要避免重定向
 				frame.src = `http://127.0.0.1:8000/main/main.html?random=${Math.random()}`;
 			}, false);
-			window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
+			// 阻止不合时宜的右键菜单
+			// window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
 		</script>
 		<iframe onload="reloadFrame()"></iframe>
 
