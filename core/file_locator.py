@@ -23,8 +23,6 @@ def get_root():
 
 def get_cache_dir():
     cache_dir = join(get_root(), "cache")
-    if not os.path.exists(cache_dir):
-        os.mkdir(cache_dir)
     return normpath(cache_dir)
 
 
@@ -38,8 +36,7 @@ def get_asset():
 
 
 def get_log_dir():
-    log_dir = join(get_root(), "log")
-
+    log_dir = join(get_root(), "logs")
     return normpath(log_dir)
 
 
@@ -58,3 +55,6 @@ def load_text(file, encode="utf-8"):
 
 def load_json(file) -> dict:
     return json.loads(load_text(file))
+
+
+init()

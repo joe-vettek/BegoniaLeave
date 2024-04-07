@@ -153,6 +153,7 @@ cython_debug/
 
 cache/
 log/
+logs/
 
 bin/
 
