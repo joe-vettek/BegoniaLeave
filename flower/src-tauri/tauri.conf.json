@@ -24,7 +24,20 @@
 			},
 			"shell": {
 				"all": false,
-				"open": true
+				"execute": true,
+				"scope": [
+					{
+						"name": "start-bridge-server",
+						"cmd": "bin\\python\\python.exe",
+						"args": [
+							"webapp.py"
+						]
+					},
+					{
+						"name": "force-stop-bridge-server",
+						"cmd": "close.bat"
+					}
+				]
 			},
 			"http": {
 				"all": false,
@@ -46,7 +59,7 @@
 		},
 		"bundle": {
 			"active": true,
-			"targets":  "nsis",
+			"targets": "nsis",
 			"identifier": "com.xueluoanping.flower",
 			"publisher": "xueluoanping",
 			"shortDescription": "A simple tool to help players enjoy Alchemy Stars.",

@@ -71,7 +71,7 @@ async def main_html():
 @app.get("/info")
 async def info():
     return {
-        "app_name": "FastAPI框架学习",
+        "app_name": "FastAPI框架",
         "app_version": "v0.0.1"
     }
 
