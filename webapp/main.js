@@ -6,7 +6,8 @@ window.onload = () => {
 		let selects = document.querySelector('.row-3>.box-in>.padding-2')
 			.querySelectorAll('input');
 		for (let s of selects) {
-			s.checked = true;
+			if (s.id != "battle-huangdian")
+				s.checked = true;
 		}
 	});
 	document.querySelector("#select-clear").addEventListener('click', (e) => {
@@ -45,7 +46,7 @@ window.onload = () => {
 			.then(function(response) {
 				console.log(response)
 
-				document.querySelector("#start").innerHTML = state ? "停止" : "启动";
+
 				if (state)
 					clearLog();
 			}).catch((e) => {
@@ -67,7 +68,60 @@ window.onload = () => {
 			}).catch((e) => {
 				console.log(e)
 			});
+		fetch('/api/status')
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error(response.statusText);
+				}
+			})
+			.then((status) => {
+				document.querySelector("#start").innerHTML = status["code"] == 200 ? "停止" : "启动";
+			}).catch((e) => {
+				console.log(e)
+			});
 	}, 1000);
+
+	document.getElementById("openDialog").addEventListener("click", function() {
+		fetch("/api/config")
+			.then(response => {
+				if (response.ok) {
+					document.getElementById("dialogOverlay").style.display = "block";
+					return response.json();
+				} else {
+					alert('后台服务似乎未启动。');
+				}
+			})
+			.then((json) => {
+				document.getElementById("port").value = json["port"];
+			})
+	});
+
+	document.getElementById("closeDialog").addEventListener("click", function() {
+		document.getElementById("dialogOverlay").style.display = "none";
+	});
+
+	document.getElementById("saveButton").addEventListener("click", function() {
+
+		fetch("/api/config", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				"config": {
+					"port": parseInt(document.getElementById("port").value)
+				}
+			})
+		}).then(response => {
+			if (response.ok) {
+				document.getElementById("dialogOverlay").style.display = "none";
+			} else {
+				alert('后台服务似乎未启动。');
+			}
+		});
+	});
 
 }
 

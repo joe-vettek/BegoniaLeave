@@ -68,6 +68,7 @@ class WorkFlow(threading.Thread, TimeoutChecker, adb.AdbConnector):
         self.screenshot_take = None
         self.run_flag = FLAG_RUN
         self.task_list = []
+        self.run_task=None
         log.printLog(i18n.translate(i18n.KEY_LOG_INIT_SUCCESS))
 
     def register_task(self, func, timeout=-1, name="NoName"):
@@ -80,6 +81,8 @@ class WorkFlow(threading.Thread, TimeoutChecker, adb.AdbConnector):
         while self.run_flag == FLAG_RUN:
             # print(self.getName())
             if self.run_flag == FLAG_RUN:
+                if self.run_task and self.run_task.run_flag==FLAG_COMPLETE:
+                    self.run_task=None
                 if not self.is_on_valid_task() and len(self.task_list) > 0:
                     self.run_task = self.task_list.pop(0)
                     self.update_timeout(self.run_task.timeout)

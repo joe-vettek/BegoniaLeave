@@ -48,13 +48,27 @@ def get_adb_name():
     return normpath(join(get_root(), 'bin/platform-tools/adb.exe'))
 
 
+def get_device():
+    return normpath(join(get_cache_dir(), 'device'))
+
+
 def load_text(file, encode="utf-8"):
     with open(file, "r", encoding=encode) as f:
         return f.read()
 
 
+def save_text(file, text: str, encode="utf-8"):
+    with open(file, "w", encoding=encode) as f:
+        f.write(text)
+    return True
+
+
 def load_json(file) -> dict:
     return json.loads(load_text(file))
+
+
+def save_json(file, d):
+    return save_text(file, json.dumps(d))
 
 
 init()

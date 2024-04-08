@@ -122,7 +122,7 @@ async def init_adb():
         # exit()
         return False
     device = device_list[0]
-    adb_path = str(device.adb_path)
+    adb_path = str(device.address)
     controller = AdbController(
         adb_path=device.adb_path,
         address=device.address,

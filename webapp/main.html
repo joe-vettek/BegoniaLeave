@@ -8,9 +8,23 @@
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	</head>
 	<body>
+		<button id="openDialog"></button>
+
+		<div id="dialogOverlay">
+			<div id="dialogBox">
+				<div id="dialogContent">
+					<h2>设置</h2>
+					<label for="port">模拟器ADB端口</label>
+					<input type="number" id="port" name="port"  min="0" max="65535" value="5555"><br><br>
+					<button id="saveButton">保存</button>
+					<button id="closeDialog">关闭</button>
+				</div>
+			</div>
+		</div>
+
 		<div class="box">
-			<img class="char" src="./char.png"/>
-			<h2 > 海棠叶 - 白夜极光自动化助手</h2>
+			<img class="char" src="./char.png" />
+			<h2> 海棠叶 - 白夜极光自动化助手</h2>
 			<div class="row-3">
 				<div class="box-in">
 					<div class="padding-2">
@@ -53,7 +67,7 @@
 				</div>
 				<div class="box-in text-center" id="start">启动</div>
 			</div>
-			<div class="row-3" ><span onclick="fetch('/close')">待施工（测试区，请勿点击）</span></div>
+			<div class="row-3"><span onclick="fetch('/close')">待施工（测试区，请勿点击）</span></div>
 			<div class="row-3 flex-warp" id="log-area"></div>
 		</div>
 

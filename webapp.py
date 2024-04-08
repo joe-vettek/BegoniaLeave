@@ -11,13 +11,13 @@ from uvicorn import Config, Server
 sys.path.append(os.getcwd())
 import ctypes
 import os
-from typing import List
+from typing import List, Any, Union
 import uvicorn
 
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import modules
-from core import work_flow, log, screen_locator
+from core import work_flow, log, screen_locator, file_locator
 
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,7 +26,8 @@ import logging
 
 
 class Item(BaseModel):
-    modules: List[str]
+    modules: Union[List[str], None] = None
+    config: Union[dict, None] = None
 
 
 work_flow_holder: work_flow.WorkFlow = None
@@ -82,6 +83,15 @@ async def connect(sign: str):
         out = log.log_cache[:]
         log.log_cache.clear()
         return out
+    if sign == "status":
+        out = {}
+        if work_flow_holder and work_flow_holder.run_task:
+            # and len(work_flow_holder.task_list) > 0 and work_flow_holder.run_flag == work_flow.FLAG_RUN
+            out["code"] = 200
+        return out
+    if sign == "config":
+        out = {"port": file_locator.load_json(file_locator.get_device())[0]["address"].split(":")[-1]}
+        return out
     return [sign]
 
 
@@ -99,6 +109,7 @@ async def background_init(item):
     if not server.should_exit and work_flow_holder is None:
         work_flow_holder = work_flow.WorkFlow()
         work_flow_holder.start()
+    if work_flow_holder:
         for h in work_flow.registered_task_list:
             if h.name in item.modules:
                 log.printLog(f"Register module {h.name}")
@@ -123,6 +134,11 @@ async def connect(sign: str, item: Item, background_tasks: BackgroundTasks):
         if work_flow_holder:
             work_flow_holder.notify_stop(lambda: set_none())
             work_flow_holder = None
+    elif sign == "config":
+        if item.config:
+            out = {"address": f"127.0.0.1:{item.config['port']}"}
+            file_locator.save_json(file_locator.get_device(), [out])
+            screen_locator.adb_path = out["address"]
     return [sign, item]
 
 
@@ -191,7 +207,7 @@ class EndpointFilter(logging.Filter):
 
 
 # Define excluded endpoints
-excluded_endpoints = ["/api/log"]
+excluded_endpoints = ["/api/log", "/api/status"]
 
 # Add filter to the logger
 logging.getLogger("uvicorn.access").addFilter(EndpointFilter(excluded_endpoints))
