@@ -54,7 +54,30 @@ window.onload = () => {
 			});
 	})
 
-	var myTarget = setInterval(function() {
+	var onceClose = false;
+	var myTarget = setInterval(async function() {
+		try {
+			// 发起网络请求
+			const response = await fetch('/api/status');
+			if (onceClose) {
+				clearLog();
+				onceClose = true;
+			}
+
+		} catch (error) {
+			// 捕获异常
+			console.log('Connect error:');
+			clearLog();
+			let now = new Date();
+			let formattedDate =
+				`${bn(now.getMonth() + 1)}-${bn(now.getDate())} ${bn(now.getHours())}:${bn(now.getMinutes())}:${bn(now.getSeconds())}`;
+			let sub_text = "<div style='color:#ff9900'>" + formattedDate +
+				"</div><div style='color:#ff9900'>后台服务进程已断开</div>";
+			// clearLog();
+			document.querySelector("#log-area").innerHTML = sub_text;
+			onceClose=true;
+			// document.querySelector("#log-area").scroll(0, document.querySelector("#log-area").scrollHeight);
+		}
 		fetch('/api/log')
 			.then(response => {
 				if (response.ok) {

@@ -33,7 +33,7 @@ shutil.copy(r'setup\publish\BegoniaLeaveSetup.exe', 'bin\BegoniaLeaveSetup.exe')
 os.system('call ' + os.path.realpath('flower/build.bat'))
 shutil.copy(r'flower\src-tauri\target\release\flower.exe', r'flower.exe')
 # 文件列表
-files_to_zip = ['webapp.py', 'flower.exe', '安装.bat', '启动入口.bat']
+files_to_zip = ['webapp.py', 'flower.exe', '安装.bat', '启动入口.bat','close.bat']
 files_to_zip.extend(get_in([], 'bin'))
 files_to_zip.extend(get_in([], 'core'))
 files_to_zip.extend(get_in([], 'modules'))
