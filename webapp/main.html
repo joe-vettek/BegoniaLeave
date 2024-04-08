@@ -15,7 +15,7 @@
 				<div id="dialogContent">
 					<h2>设置</h2>
 					<label for="port">模拟器ADB端口</label>
-					<input type="number" id="port" name="port"  min="0" max="65535" value="5555"><br><br>
+					<input type="number" id="port" name="port" min="0" max="65535" value="5555"><br><br>
 					<button id="saveButton">保存</button>
 					<button id="closeDialog">关闭</button>
 				</div>
@@ -70,6 +70,8 @@
 			<div class="row-3"><span onclick="fetch('/close')">待施工（测试区，请勿点击）</span></div>
 			<div class="row-3 flex-warp" id="log-area"></div>
 		</div>
-
+		<div class="status-bar">
+			后台服务状态检测中
+		</div>
 	</body>
 </html>

@@ -54,28 +54,27 @@ window.onload = () => {
 			});
 	})
 
-	var onceClose = false;
+	var status = -1;
 	var myTarget = setInterval(async function() {
 		try {
 			// 发起网络请求
 			const response = await fetch('/api/status');
-			if (onceClose) {
-				clearLog();
-				onceClose = true;
-			}
 
+			if (status != 1) {
+				document.querySelector(".status-bar").innerHTML =
+					"<div style='color:#c4d7d6'>后台服务进程连接中</div>";
+				document.querySelector(".status-bar").classList.remove('blinking');
+			}
+			status = 1;
 		} catch (error) {
 			// 捕获异常
 			console.log('Connect error:');
-			clearLog();
-			let now = new Date();
-			let formattedDate =
-				`${bn(now.getMonth() + 1)}-${bn(now.getDate())} ${bn(now.getHours())}:${bn(now.getMinutes())}:${bn(now.getSeconds())}`;
-			let sub_text = "<div style='color:#ff9900'>" + formattedDate +
-				"</div><div style='color:#ff9900'>后台服务进程已断开</div>";
-			// clearLog();
-			document.querySelector("#log-area").innerHTML = sub_text;
-			onceClose=true;
+			if (status != 0) {
+				document.querySelector(".status-bar").innerHTML =
+					"<div style='color:#30161c'>后台服务进程已断开</div>";
+				document.querySelector(".status-bar").classList.add('blinking');
+			}
+			status = 0;
 			// document.querySelector("#log-area").scroll(0, document.querySelector("#log-area").scrollHeight);
 		}
 		fetch('/api/log')

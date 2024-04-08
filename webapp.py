@@ -4,7 +4,7 @@ import os
 import signal
 import sys
 
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, Request
 from uvicorn import Config, Server
 
 # 注意这里有一些问题哦
@@ -55,7 +55,7 @@ app.mount("/main", StaticFiles(directory="webapp"), name="main")
 app.add_middleware(
     CORSMiddleware,
     # 这里配置允许跨域访问的前端地址
-    allow_origins=["*"],
+    allow_origins=["http://localhost", "https://tauri.localhost", "http://127.0.0.1"],
     # 跨域请求是否支持 cookie， 如果这里配置true，则allow_origins不能配置*
     allow_credentials=False,
     # 支持跨域的请求类型，可以单独配置get、post等，也可以直接使用通配符*表示支持所有
@@ -65,7 +65,10 @@ app.add_middleware(
 
 
 @app.get("/", response_class=RedirectResponse)
-async def main_html():
+async def main_html(request: Request):
+    client_ip = request.client.host
+    request_url = request.url
+    print({"client_ip": client_ip, "request_url": str(request_url)})
     return "/main/main.html"
 
 

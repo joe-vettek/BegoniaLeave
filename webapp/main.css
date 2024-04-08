@@ -112,73 +112,123 @@ body {
 	background-color: #ee2746;
 }
 
-.box-in.text-center{
+.box-in.text-center {
 	background-color: #f03752;
 }
 
 
 
 #dialogOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
 }
 
 #dialogBox {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: black;
 }
 
+
+
 #dialogContent {
-  text-align: center;
+	text-align: center;
 }
 
 #closeDialog {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 #saveButton:hover {
-  background-color: #55aa00;
+	background-color: #55aa00;
 }
 
 #saveButton {
-  background-color: #5ebd00;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+	background-color: #5ebd00;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 #closeDialog:hover {
-  background-color: #c82333;
+	background-color: #c82333;
 }
 
 
-#openDialog{
-	position:absolute;
-	right:20px;
-	top:20px;
+#openDialog {
+	position: absolute;
+	right: 20px;
+	top: 20px;
 	background: url('./asset/icons8/icons8-settings-50.png') left center no-repeat;
 	background-size: contain;
 	height: 20px;
 	width: 20px;
 	border: none;
 	cursor: pointer;
+}
+
+
+.status-bar {
+	background-color: #7fbfbf;
+	color: white;
+	padding: 10px;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 20px;
+}
+
+div {
+	color: #f8f8f8
+}
+
+h2 {
+	color: #b44e86;
+}
+
+#dialogContent {
+	color: black !important;
+}
+
+.row-3>span {
+	color: #7a5555;
+}
+
+@keyframes blink {
+	0% {
+		color: white;
+	}
+
+	50% {
+		color: #d7d7d7;
+	}
+
+	100% {
+		color: white;
+	}
+}
+
+.blinking>div {
+	animation: blink 1s infinite;
 }
