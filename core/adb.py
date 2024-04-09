@@ -95,9 +95,9 @@ class AdbConnector:
 
     def update_screenshot(self):
         if self.device:
-            self.screenshot_take = self.device.screenshot()
-            self.screenshot_take.save(file_locator.get_cache_screenshot())
-            self.screenshot_take = screen_locator.read_img(file_locator.get_cache_screenshot())
+            self.screenshot_take = self.device.screenshot(format="opencv")
+            # self.screenshot_take.save(file_locator.get_cache_screenshot())
+            # self.screenshot_take = screen_locator.read_img(file_locator.get_cache_screenshot())
             return self.screenshot_take
         else:
             print("Not valid device, can not update screenshot")

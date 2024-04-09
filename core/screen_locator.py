@@ -9,7 +9,7 @@ import numpy as np
 from core import work_flow, log, file_locator
 
 from typing import Tuple
-from bin.mfw.maa.define import RectType
+from bin.mfw.maa.define import RectType, MaaAdbControllerTypeEnum
 from bin.mfw.maa.library import Library
 from bin.mfw.maa.resource import Resource
 from bin.mfw.maa.controller import AdbController
@@ -126,6 +126,8 @@ async def init_adb():
     controller = AdbController(
         adb_path=device.adb_path,
         address=device.address,
+        type=MaaAdbControllerTypeEnum.Screencap_FastestWay,
+        agent_path='bin/mfw/agent'
     )
     await controller.connect()
     print(controller)

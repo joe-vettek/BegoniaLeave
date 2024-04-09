@@ -10,7 +10,7 @@ def restart_game(work_holder: work_flow.WorkFlow):
     if not is_home:
         work_holder.restart()
         log.printLog("正在重启")
-        utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_LOGIN_BUTTON), 120, 3)
+        utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_LOGIN_BUTTON), 300, 3)
         log.printLog("正在登录中")
         time.sleep(3)
         utils.create_limited_action(lambda: is_in_main(work_holder), 120, 0.5)
