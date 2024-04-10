@@ -8,7 +8,7 @@ from core import work_flow
 
 # 屏幕缩放系数 mac缩放是2 windows一般是1
 screenScale = 1
-
+adb_path = "127.0.0.1:5555"
 
 def read_img(img_path):
     return cv2.imread(img_path)

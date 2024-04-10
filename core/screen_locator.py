@@ -94,17 +94,17 @@ async def init_instance():
 
 async def init_resource():
     global resource
-    version = Library.open("bin/mfw/bin")
+    version = Library.open(file_locator.get_mfw_bin())
     log.printLog(f"发现 MaaFramework Version: {version}")
     Toolkit.init_config()
     resource = Resource()
-    await resource.load("asset/mfw/resource")
+    await resource.load(file_locator.get_mfw_res())
     log.printLog("资源加载完毕")
 
 
 async def init_adb():
     global controller, adb_path
-    device_cache = 'cache/device'
+    device_cache = file_locator.get_device()
     if not os.path.exists(device_cache):
         # 暂停扫盘
         # device_list = await Toolkit.adb_devices()
@@ -127,7 +127,7 @@ async def init_adb():
         adb_path=device.adb_path,
         address=device.address,
         type=MaaAdbControllerTypeEnum.Screencap_FastestWay,
-        agent_path='bin/mfw/agent'
+        agent_path=file_locator.get_mfw_agent()
     )
     await controller.connect()
     print(controller)

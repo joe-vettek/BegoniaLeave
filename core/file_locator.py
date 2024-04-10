@@ -52,6 +52,18 @@ def get_device():
     return normpath(join(get_cache_dir(), 'device'))
 
 
+def get_mfw_bin():
+    return normpath(join(get_root(),  'bin', 'mfw', 'bin'))
+
+
+def get_mfw_res():
+    return normpath(join(get_cache_dir(), 'asset', 'mfw', 'resource'))
+
+
+def get_mfw_agent():
+    return normpath(join(get_root(),'bin', 'mfw', 'agent'))
+
+
 def load_text(file, encode="utf-8"):
     with open(file, "r", encoding=encode) as f:
         return f.read()

@@ -1,6 +1,7 @@
+import asyncio
 import time
 
-from core import work_flow, utils, log, streamlist
+from core import work_flow, utils, log, streamlist,screen_locator
 
 
 # 第一个函数，这里等待重启
@@ -28,9 +29,12 @@ def auto_battle(work_holder: work_flow.WorkFlow):
     log.printLog("结束战斗")
 
 
-# 测试代码
+# asyncio.run(screen_locator.init_instance())
+# # 测试代码
 # a = work_flow.WorkFlow()
 #
+# auto_battle(a)
+# #
 # a.register_task(auto_battle)
 # a.start()
 
