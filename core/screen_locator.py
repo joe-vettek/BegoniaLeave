@@ -126,7 +126,6 @@ async def init_adb():
     controller = AdbController(
         adb_path=device.adb_path,
         address=device.address,
-        type=MaaAdbControllerTypeEnum.Screencap_FastestWay,
         agent_path=file_locator.get_mfw_agent()
     )
     await controller.connect()

@@ -39,9 +39,9 @@ def start_battel(work_holder: work_flow.WorkFlow):
 
 # asyncio.run(screen_locator.init_instance())
 # 测试代码
-a = work_flow.WorkFlow()
-
-auto_battle(a)
+# a = work_flow.WorkFlow()
+#
+# auto_battle(a)
 #
 # a.register_task(auto_battle)
 # a.start()

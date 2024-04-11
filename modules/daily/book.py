@@ -13,7 +13,7 @@ def submit_book_mission(work_holder: work_flow.WorkFlow):
     utils.random_sleep()
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_BOOK_QUEST_COMPLETE), 6, 0.5)
     utils.random_sleep()
-    utils.deal_with_get_item(work_holder)
+    utils.collect_mul_items(work_holder)
     utils.random_sleep()
 
     utils.waiting_loading(work_holder, streamlist.IMAGE_BOOK_HOME, 3)

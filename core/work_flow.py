@@ -131,6 +131,7 @@ class WaitWorkRunner(TimeoutChecker):
                     self.run_flag = FLAG_COMPLETE
                     return True
                 time.sleep(self.sleep_interval)
+            log.printLog("已超过{}秒".format(self.timeout))
         self.run_flag = FLAG_ERROR
         return False
 

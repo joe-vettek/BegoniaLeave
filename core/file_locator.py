@@ -57,7 +57,7 @@ def get_mfw_bin():
 
 
 def get_mfw_res():
-    return normpath(join(get_cache_dir(), 'asset', 'mfw', 'resource'))
+    return normpath(join(get_root(), 'asset', 'mfw', 'resource'))
 
 
 def get_mfw_agent():

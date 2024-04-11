@@ -14,10 +14,7 @@ def receive_mail(work_holder: work_flow.WorkFlow):
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_MAIL_RECEIVE_ALL_LIGHT), 10, 0.5)
     utils.random_sleep()
     # Todo:这里目前可能有bug，超多物品有领取问题
-    utils.deal_with_get_item(work_holder)
-    utils.deal_with_get_item(work_holder)
-    utils.deal_with_get_item(work_holder)
-    utils.deal_with_get_item(work_holder)
+    utils.collect_mul_items(work_holder)
     log.printLog("返回主页")
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_COMMON_HOME), 15, 0.5)
 

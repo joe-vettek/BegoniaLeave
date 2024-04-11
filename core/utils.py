@@ -59,7 +59,17 @@ def waiting_loading(work_holder: work_flow.WorkFlow, img_key, timeout=-1):
     return True
 
 
-def waiting_loading_txt(work_holder: work_flow.WorkFlow, txt, timeout=-1,interval=1):
+def waiting_loading_txt(work_holder: work_flow.WorkFlow, txt, timeout=-1, interval=1):
     if not work_holder.exists_txt(txt):
         return create_limited_action(lambda: work_holder.exists_txt(txt), timeout, interval)
     return True
+
+
+def collect_mul_items(work_holder: work_flow.WorkFlow):
+    random_sleep(extra_time=0.5)
+    result = False
+    while work_holder.exists(streamlist.IMAGE_COMMON_HINT_GET_ITEMS):
+        work_holder.click(600, 50, random_use=True)
+        random_sleep(extra_time=1)
+        result = True
+    return result

@@ -19,12 +19,12 @@ def harvest_and_explore(work_holder: work_flow.WorkFlow):
         if utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_FOUNDATION_BONUS_1), 2,
                                        0.5):
             # 尝试收取奖励1
-            utils.deal_with_get_item(work_holder)
+            utils.collect_mul_items(work_holder)
         # 精度不够
         if utils.create_limited_action(
                 lambda: work_holder.click_if_exists(streamlist.IMAGE_FOUNDATION_BONUS_2, double=True), 2,
                 0.5):
-            utils.deal_with_get_item(work_holder)
+            utils.collect_mul_items(work_holder)
         utils.random_sleep()
         if work_holder.exists(streamlist.IMAGE_FOUNDATION_BONUS_HINT):
             log.printLog("检测到入住升级提示，请手动完成，否则不能一键收集")
@@ -36,14 +36,11 @@ def harvest_and_explore(work_holder: work_flow.WorkFlow):
     utils.random_sleep(1.5,extra_time=0.5)
 
     # 假如需要领取东西的话，多检查几次
+    log.printLog("检查是否有探险完成")
     if utils.waiting_loading(work_holder,streamlist.IMAGE_FOUNDATION_EXPLORE_COMPLETE,3):
         utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_FOUNDATION_EXPLORE_COMPLETE),
                                     5, 1)
-        utils.deal_with_get_item(work_holder)
-        utils.deal_with_get_item(work_holder)
-        utils.deal_with_get_item(work_holder)
-        utils.deal_with_get_item(work_holder)
-        utils.deal_with_get_item(work_holder)
+        utils.collect_mul_items(work_holder)
         log.printLog("完成旧物品领取")
     else:
         log.printLog("无探险奖励可领取")

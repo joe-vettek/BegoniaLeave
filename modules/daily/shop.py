@@ -23,7 +23,7 @@ def buy_random(work_holder: work_flow.WorkFlow):
     utils.random_sleep()
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_SHOP_PURCHASE), 6, 0.5)
     utils.random_sleep()
-    utils.deal_with_get_item(work_holder)
+    utils.collect_mul_items(work_holder)
     utils.waiting_loading(work_holder, streamlist.IMAGE_SHOP_HOME, 3)
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_SHOP_HOME), 5, 0.5)
 
