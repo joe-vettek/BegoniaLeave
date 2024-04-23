@@ -46,6 +46,7 @@ body {
 
 #start,
 .box-in.row-2.text-center,
+.padding-2>div,
 input {
 	cursor: pointer;
 }

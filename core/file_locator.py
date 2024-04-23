@@ -54,6 +54,15 @@ def get_device():
         save_json(device_path, [{"address": "127.0.0.1:5555"}])
     return device_path
 
+def get_update():
+    update_path = normpath(join(get_cache_dir(), 'update'))
+    if not os.path.exists(update_path):
+        save_json(update_path,  {
+            "daily": {
+                "battle": "经验-森"
+            }
+        })
+    return update_path
 
 def get_mfw_bin():
     return normpath(join(get_root(), 'bin', 'mfw', 'bin'))
@@ -83,7 +92,7 @@ def load_json(file) -> dict:
 
 
 def save_json(file, d):
-    return save_text(file, json.dumps(d))
+    return save_text(file, json.dumps(d,ensure_ascii=False))
 
 
 init()

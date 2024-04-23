@@ -54,6 +54,8 @@ for i in z.namelist():
         path = os.path.join("bin/mfw/bin", i.replace("bin/", ""))
     elif i.startswith("share/MaaAgentBinary"):
         path = os.path.join("bin/mfw/agent", i.replace("share/MaaAgentBinary/", ""))
+    elif i.endswith('LICENSE.md'):
+        path = os.path.join("bin/mfw", 'LICENSE.md')
     if path:
         # path="bin/mfw"
         # path=os.path.normpath(path)
@@ -79,39 +81,7 @@ for i in z.namelist():
                 with open(path, 'w', encoding='utf-8') as f:
                     f.write(new_instance_txt)
 
-# for i in z.namelist():
-#
-#     path = None
-#     if i.startswith("binding/Python/maa/"):
-#         path = os.path.join("bin/mfw/maa", i.replace("binding/Python/maa/", ""))
-#     elif i.startswith("bin/"):
-#         path = os.path.join("bin/mfw/bin", i.replace("bin/", ""))
-#     if path:
-#         z.extract(i, "bin/mfw")
-#         try:
-#             if os.path.normpath(os.path.join("bin/mfw", i)) != os.path.normpath(path):
-#                 os.remove(path)
-#                 os.rename(os.path.join("bin/mfw", i), path)
-#         except:
-#             print("创建和移动失败", i,'-->',path)
-#         if not os.path.exists(os.path.dirname(path)):
-#             os.mkdir(os.path.dirname(path))
-#         if os.path.isdir(path):
-#             print(path)
-#             continue
-#         with open(path, 'wb') as file:
-#             file.write(z.read(i))
-#         if path.endswith(".py"):
-#             with open(path, 'r', encoding='utf-8') as f:
-#                 instance_txt = f.read()
-#                 # mfw1.6.5对中文传参有一定问题，需要修改代码
-#                 pattern = r"json\.dumps\((task_param|param)\)"
-#                 replacement = r"json.dumps(\1, ensure_ascii=False)"
-#                 new_instance_txt = re.sub(pattern, replacement, instance_txt)
-#             if new_instance_txt != instance_txt:
-#                 with open(path, 'w', encoding='utf-8') as f:
-#                     f.write(new_instance_txt)
-#
-# os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding/Python/maa')))
-# os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding/Python')))
-# os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding')))
+for i in z.namelist():
+    if i.startswith("tools/ImageCropper"):
+        z.extract(i, "cache")
+

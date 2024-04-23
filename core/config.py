@@ -1,4 +1,5 @@
 import logging
+import os.path
 from typing import List
 
 from core import file_locator
@@ -11,8 +12,10 @@ def get_server():
 def log_click():
     return False
 
+
 def port():
     return 8000
+
 
 class EndpointFilter(logging.Filter):
     """Filter class to exclude specific endpoints from log entries."""
@@ -42,3 +45,11 @@ class EndpointFilter(logging.Filter):
 
 # Define excluded endpoints
 excluded_endpoints = ["/api/log", "/api/status"]
+
+adb_path = "127.0.0.1:5555"
+
+update = {
+    "daily": {
+        "battle": "金币"
+    }
+}

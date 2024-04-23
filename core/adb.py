@@ -1,4 +1,5 @@
 import datetime
+import os
 import random
 import subprocess
 import time
@@ -7,7 +8,7 @@ from typing import Union
 import adbutils
 import uiautomator2 as u2
 
-from core import file_locator, screen_locator, log, config\
+from core import file_locator, screen_locator, log, config \
     # , _screen_locator as screen_locator
 
 package_name = "com.tencent.baiye"
@@ -78,7 +79,7 @@ class AdbConnector:
         # except:
         #     # 目前这个检测有点问题
         #     self.device = u2.connect_adb_wifi("127.0.0.1:5555")
-        self.device = u2.connect_adb_wifi(screen_locator.adb_path)
+        self.device = u2.connect_adb_wifi(config.adb_path)
 
     def set_device(self):
         holder = adbutils.AdbClient(host="127.0.0.1", port=5037)
@@ -112,10 +113,10 @@ class AdbConnector:
         else:
             return False
 
-    def exists_txt(self, txt: str, update=True):
+    def exists_txt(self, txt: str, update=True,roi=None):
         if update:
             self.update_screenshot()
-        location = screen_locator.text_center(self.screenshot_take, text_filter=txt)
+        location = screen_locator.text_center(self.screenshot_take, text_filter=txt,roi=roi)
         if location is not None and len(location) > 0:
             return True
         else:
@@ -140,8 +141,8 @@ class AdbConnector:
                 return True
         return False
 
-    def click_txt_if_exists(self, txt: str, reverse=True, double=False, delay: Union[float, int] = 0):
-        if locations := screen_locator.text_center(target=self.update_screenshot(), text_filter=txt):
+    def click_txt_if_exists(self, txt: str, reverse=True, double=False, delay: Union[float, int] = 0,roi=None):
+        if locations := screen_locator.text_center(target=self.update_screenshot(), text_filter=txt,roi=roi):
             if locations is not None and len(locations) > 0:
                 pos = locations[0] if not reverse else locations[-1][0]
                 if delay > 0:
@@ -174,3 +175,5 @@ class AdbConnector:
 
 p_config = {'packageName': 'com.tencent.baiye', 'mainActivity': 'com.tencent.baiye.MainActivity', 'label': '白夜极光',
             'versionName': '1.13.0', 'versionCode': 2185136, 'size': 2076082511}
+# 这里修改一下adb地址
+os.environ["ADBUTILS_ADB_PATH"] = file_locator.get_adb_name()

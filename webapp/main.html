@@ -28,38 +28,45 @@
 			<div class="row-3">
 				<div class="box-in">
 					<div class="padding-2">
-						<div><input type="checkbox" id="login-restart" name="checkbox" value="option1">
-							<label for="checkbox">启动连接</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="login-restart" name="login-restart"
+								value="login-restart">
+							<label for="login-restart">启动连接</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-mail" name="checkbox" value="option1">
-							<label for="checkbox">领取邮件</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-mail" name="daily-mail" value="daily-mail">
+							<label for="daily-mail">领取邮件</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-explore" name="checkbox" value="option1">
-							<label for="checkbox">收获和探险</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-explore" name="daily-explore"
+								value="daily-explore">
+							<label for="daily-explore">收获和探险</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-battle" name="checkbox" value="option1">
-							<label for="checkbox">刷体力</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-battle" name="daily-battle"
+								value="daily-battle">
+							<label for="daily-battle">刷体力</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-shop" name="checkbox" value="option1">
-							<label for="checkbox">随机购物</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-shop" name="daily-shop" value="daily-shop">
+							<label for="daily-shop">随机购物</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-quest" name="checkbox" value="option1">
-							<label for="checkbox">领取任务</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-quest" name="daily-quest"
+								value="daily-quest">
+							<label for="daily-quest">领取任务</label>
 						</div>
-						<div>
-							<input type="checkbox" id="daily-book" name="checkbox" value="option1">
-							<label for="checkbox">领取通行证任务</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="daily-book" name="daily-book" value="daily-book">
+							<label for="daily-book">领取通行证任务</label>
 						</div>
-						<div>
-							<input type="checkbox" id="battle-huangdian" name="checkbox" value="option1">
-							<label for="checkbox">自动荒典</label>
+						<div class="check_line">
+							<input type="checkbox" class="module" id="battle-huangdian" name="battle-huangdian"
+								value="battle-huangdian">
+							<label for="battle-huangdian">自动荒典</label>
 						</div>
 					</div>
+
 					<div class="padding-2 flex-warp">
 						<div class="box-in row-2  text-center" id="select-all">全选</div>
 						<div class="box-in row-2  text-center" id="select-clear">清空</div>
@@ -67,7 +74,14 @@
 				</div>
 				<div class="box-in text-center" id="start">启动</div>
 			</div>
-			<div class="row-3"><span onclick="fetch('/close')">待施工（测试区，请勿点击）</span></div>
+			<div class="row-3">自动战斗选择关卡：<select id="battle_config">
+					<option value="金币">金币</option>
+					<option value="经验-水">经验-水</option>
+					<option value="经验-火">经验-火</option>
+					<option value="经验-森">经验-森</option>
+					<option value="经验-雷">经验-雷</option>
+					<option value="装备经验">装备经验</option>
+				</select></div>
 			<div class="row-3 flex-warp" id="log-area"></div>
 		</div>
 		<div class="status-bar">

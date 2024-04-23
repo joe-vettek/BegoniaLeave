@@ -1,3 +1,4 @@
+import asyncio
 import time
 
 from core import work_flow, streamlist, utils, log,screen_locator
@@ -31,7 +32,11 @@ def buy_random(work_holder: work_flow.WorkFlow):
 
 
 # 测试代码
+
 # a = work_flow.WorkFlow()
+#
+# utils.create_limited_action(lambda: a.click_txt_if_exists("夜幕市集"), 6, 0.5)
+
 # a.update_screenshot()
 #
 # # a.register_task(buy_random)

@@ -1,5 +1,4 @@
-import asyncio
-import logging
+import os
 import os
 import signal
 import sys
@@ -12,15 +11,14 @@ from uvicorn import Config, Server
 
 # 注意这里有一些问题哦
 sys.path.append(os.getcwd())
-import ctypes
 import os
-from typing import List, Any, Union
+from typing import List, Union
 import uvicorn
 
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import modules
-from core import work_flow, log, screen_locator, file_locator, config
+from core import work_flow, log, file_locator, config
 
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,6 +29,7 @@ import logging
 class Item(BaseModel):
     modules: Union[List[str], None] = None
     config: Union[dict, None] = None
+    update: Union[dict, None] = None
 
 
 work_flow_holder: work_flow.WorkFlow = None
@@ -53,12 +52,11 @@ def set_none():
 # @app.on_event("shutdown")
 async def shutdown_event():
     print("Performing clean shutdown...")
-    screen_locator.cancel_instance()
     # global  loop
     # loop=None
-    if loop:
-        loop.stop()
-        loop.close()
+    # if loop:
+    #     loop.stop()
+    #     loop.close()
     # if tasks:
     #     for i in tasks:
     #         print(i.done())
@@ -71,6 +69,7 @@ async def shutdown_event():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
+
     pass
     yield
     # Clean up the ML models and release the resources
@@ -117,15 +116,17 @@ async def connect(sign: str):
         out = log.log_cache[:]
         log.log_cache.clear()
         return out
-    if sign == "status":
+    elif sign == "status":
         out = {}
         if work_flow_holder and work_flow_holder.run_task:
             # and len(work_flow_holder.task_list) > 0 and work_flow_holder.run_flag == work_flow.FLAG_RUN
             out["code"] = 200
         return out
-    if sign == "config":
+    elif sign == "config":
         out = {"port": file_locator.load_json(file_locator.get_device())[0]["address"].split(":")[-1]}
         return out
+    elif sign == "update":
+        return file_locator.load_json(file_locator.get_update())
     return [sign]
 
 
@@ -133,13 +134,13 @@ tasks: List = None
 loop = None
 
 
-async def background_init(item):
+def background_init(item):
     global work_flow_holder
 
-    if not server.should_exit and screen_locator.maa_inst is None:
-        global tasks, loop
-        # print(os.getpid(), os.getpid())
-        tasks, loop = await screen_locator.init_instance()
+    # if not server.should_exit and screen_locator.maa_inst is None:
+    #     global tasks, loop
+    #     # print(os.getpid(), os.getpid())
+    #     tasks, loop = await screen_locator.init_instance()
     if not server.should_exit and work_flow_holder is None:
         work_flow_holder = work_flow.WorkFlow()
         work_flow_holder.start()
@@ -157,6 +158,10 @@ async def connect(sign: str, item: Item, background_tasks: BackgroundTasks):
     if sign == "connect":
         background_tasks.add_task(background_init, item)
 
+    elif sign == "update":
+        config.update = item.update
+        file_locator.save_json(file_locator.get_update(), config.update)
+
     elif sign == "disconnect":
         log.printLog("正在停止工作流")
         if loop:
@@ -172,7 +177,8 @@ async def connect(sign: str, item: Item, background_tasks: BackgroundTasks):
         if item.config:
             out = {"address": f"127.0.0.1:{item.config['port']}"}
             file_locator.save_json(file_locator.get_device(), [out])
-            screen_locator.adb_path = out["address"]
+            config.adb_path = out["address"]
+
     return [sign, item]
 
 
@@ -208,6 +214,6 @@ if __name__ == "__main__":
     # p.start()
     # , log_level='critical'
     # uvicorn.run(app, port=port, log_config=UVICORN_LOGGING_CONFIG)
-    config = Config(app, port=config.port(), log_config=UVICORN_LOGGING_CONFIG)
-    server = Server(config=config)
+    unni_config = Config(app, port=config.port(), log_config=UVICORN_LOGGING_CONFIG)
+    server = Server(config=unni_config)
     server.run()

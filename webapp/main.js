@@ -1,7 +1,80 @@
 console.log("ok", 123)
 
+function get_update() {
+	let modules = [];
+	let selects = document.querySelectorAll('.module');
+	for (let s of selects) {
+		if (s.checked) modules.push(s.id);
+	}
+	return {
+		"update": {
+			"select": modules,
+			"daily": {
+				"battle": document.querySelector("#battle_config").value
+			}
+		}
+	};
+}
 
+
+function set_update(update) {
+
+	if (update["daily"]["battle"]) {
+		let ops = document.querySelector("#battle_config").options;
+		for (let i in ops) {
+			if (ops[i].value == update["daily"]["battle"]) {
+				document.querySelector("#battle_config").selectedIndex = i;
+				break;
+			}
+		}
+	}
+	if (update["select"]) {
+		for (let i of update["select"]) {
+			document.getElementById(i).checked = true;
+		}
+	}
+}
+
+function send_update() {
+	let _fetch = fetch('/api/update', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(get_update())
+	});
+}
 window.onload = () => {
+	const check_lines = document.querySelectorAll('.check_line');
+	check_lines.forEach(check_line => {
+		// const checkbox = ;
+		check_line.addEventListener('click', (e) => {
+			if (e.srcElement.type != "checkbox") {
+				let checkbox = check_line.children[0];
+				checkbox.checked = !checkbox.checked;
+			}
+		});
+	});
+	const modules = document.querySelectorAll('.module');
+	modules.forEach(module => {
+		// const checkbox = ;
+		module.addEventListener('change', send_update);
+	});
+	fetch('/api/update')
+		.then(response => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				throw new Error(response.statusText);
+			}
+		})
+		.then((log) => {
+			set_update(log)
+			console.log(log)
+		}).catch((e) => {
+			console.log(e)
+		});
+	document.querySelector("#battle_config").addEventListener('change', send_update);
 	document.querySelector("#select-all").addEventListener('click', (e) => {
 		let selects = document.querySelector('.row-3>.box-in>.padding-2')
 			.querySelectorAll('input');
@@ -9,6 +82,7 @@ window.onload = () => {
 			if (s.id != "battle-huangdian")
 				s.checked = true;
 		}
+		selects[0].dispatchEvent(new CustomEvent('change'));
 	});
 	document.querySelector("#select-clear").addEventListener('click', (e) => {
 		let selects = document.querySelector('.row-3>.box-in>.padding-2')
@@ -16,13 +90,19 @@ window.onload = () => {
 		for (let s of selects) {
 			s.checked = false;
 		}
+		selects[0].dispatchEvent(new CustomEvent('change'));
 	});
 	document.querySelector("#start").addEventListener('click', (e) => {
 		let selects = document.querySelector('.row-3>.box-in>.padding-2')
 			.querySelectorAll('input');
 
 		let data = {
-			"modules": []
+			"modules": [],
+			// "update": {
+			// 	"daily": {
+			// 		"battle": document.querySelector("#battle_config").value
+			// 	}
+			// }
 		};
 		for (let s of selects) {
 			if (s.checked) data["modules"].push(s.id);
@@ -169,3 +249,8 @@ function appendLog(logs) {
 function bn(i) {
 	return (i + "").padStart(2, "0");
 }
+
+// window.addEventListener('beforeunload', function(event) {
+// 	event.preventDefault();
+// 	event.returnValue = '确认要关闭吗';
+// });

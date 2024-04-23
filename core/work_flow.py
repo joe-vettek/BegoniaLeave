@@ -1,9 +1,10 @@
+import asyncio
 import threading
 import time
 import traceback
 from typing import List
 
-from core import adb, log, i18n
+from core import adb, log, i18n, mfw_handler, config, file_locator
 
 FLAG_START = 0
 FLAG_RUN = 1
@@ -65,6 +66,8 @@ class WorkFlow(threading.Thread, TimeoutChecker, adb.AdbConnector):
         threading.Thread.__init__(self)
         TimeoutChecker.__init__(self, -1, 0.1)
         adb.AdbConnector.__init__(self)
+        config.update=file_locator.load_json(file_locator.get_update())
+        asyncio.run(mfw_handler.init_instance())
         self.screenshot_take = None
         self.run_flag = FLAG_RUN
         self.task_list = []
@@ -120,7 +123,7 @@ class WaitWorkRunner(TimeoutChecker):
             return self.func()
         except Exception as e:
             print(e)
-            traceback.print_stack()
+            traceback.print_exc()
             return False
 
     def wait_until_max(self):
