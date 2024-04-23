@@ -7,6 +7,8 @@ import sys
 from fastapi import FastAPI, BackgroundTasks, Request
 from uvicorn import Config, Server
 
+# from core.config import EndpointFilter, excluded_endpoints
+
 # 注意这里有一些问题哦
 sys.path.append(os.getcwd())
 import ctypes
@@ -17,7 +19,7 @@ import uvicorn
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import modules
-from core import work_flow, log, screen_locator, file_locator
+from core import work_flow, log, screen_locator, file_locator,config
 
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -66,6 +68,7 @@ app.add_middleware(
 
 @app.get("/", response_class=RedirectResponse)
 async def main_html(request: Request):
+    # 这里检查一下来源
     client_ip = request.client.host
     request_url = request.url
     print({"client_ip": client_ip, "request_url": str(request_url)})
@@ -75,7 +78,7 @@ async def main_html(request: Request):
 @app.get("/info")
 async def info():
     return {
-        "app_name": "FastAPI框架",
+        "app_name": "海棠叶自动化助手后台--基于FastAPI框架",
         "app_version": "v0.0.1"
     }
 
@@ -107,7 +110,7 @@ async def background_init(item):
 
     if not server.should_exit and screen_locator.maa_inst is None:
         global tasks, loop
-        print(os.getpid(), os.getpid())
+        # print(os.getpid(), os.getpid())
         tasks, loop = await screen_locator.init_instance()
     if not server.should_exit and work_flow_holder is None:
         work_flow_holder = work_flow.WorkFlow()
@@ -179,52 +182,22 @@ async def shutdown_event():
 
 UVICORN_LOGGING_CONFIG: dict = uvicorn.config.LOGGING_CONFIG
 
-
 # UVICORN_LOGGING_CONFIG["filters"] = {"access": {"()":""}}
 
 
-class EndpointFilter(logging.Filter):
-    """Filter class to exclude specific endpoints from log entries."""
-
-    def __init__(self, excluded_endpoints: List[str]) -> None:
-        """
-        Initialize the EndpointFilter class.
-
-        Args:
-            excluded_endpoints: A list of endpoints to be excluded from log entries.
-        """
-        super().__init__()
-        self.excluded_endpoints = excluded_endpoints
-
-    def filter(self, record: logging.LogRecord) -> bool:
-        """
-        Filter out log entries for excluded endpoints.
-
-        Args:
-            record: The log record to be filtered.
-
-        Returns:
-            bool: True if the log entry should be included, False otherwise.
-        """
-        return record.args and len(record.args) >= 3 and record.args[2] not in self.excluded_endpoints
-
-
-# Define excluded endpoints
-excluded_endpoints = ["/api/log", "/api/status"]
-
 # Add filter to the logger
-logging.getLogger("uvicorn.access").addFilter(EndpointFilter(excluded_endpoints))
+logging.getLogger("uvicorn.access").addFilter(config.EndpointFilter(config.excluded_endpoints))
 
 if __name__ == "__main__":
     # os.system(os.path.join(os.getcwd(), 'webapp/main.html'))
-    print("正在启动，若未启动浏览器可手动访问 http://127.0.0.1:8000/")
+    print(f"正在启动，若未启动浏览器可手动访问 http://127.0.0.1:{config.port()}/")
     # os.system(r'start bin\tauri\flower.exe')
-    port = 8000
+    # port = 8000
     # webbrowser.open(f"http://127.0.0.1:{port}/")
     # p = BrowerProcess(port, name='leaves')
     # p.start()
     # , log_level='critical'
     # uvicorn.run(app, port=port, log_config=UVICORN_LOGGING_CONFIG)
-    config = Config(app, port=port, log_config=UVICORN_LOGGING_CONFIG)
+    config = Config(app, port=config.port(), log_config=UVICORN_LOGGING_CONFIG)
     server = Server(config=config)
     server.run()

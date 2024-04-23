@@ -19,6 +19,8 @@ def buy_random(work_holder: work_flow.WorkFlow):
     log.printLog("进行购物")
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_SHOP_GOLD_SHOP), 6, 0.5)
     utils.random_sleep()
+    utils.create_limited_action(lambda: work_holder.click_txt_if_exists("夜幕市集"), 6, 0.5)
+    utils.random_sleep()
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_SHOP_GOLD_ICON_LIGHT,reverse=True), 6, 0.5)
     utils.random_sleep()
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_SHOP_PURCHASE), 6, 0.5)

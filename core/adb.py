@@ -7,7 +7,7 @@ from typing import Union
 import adbutils
 import uiautomator2 as u2
 
-from core import file_locator, screen_locator, log, config,_screen_locator as screen_locator
+from core import file_locator, screen_locator, log, config, _screen_locator as screen_locator
 
 package_name = "com.tencent.baiye"
 
@@ -168,6 +168,7 @@ class AdbConnector:
             ex = ex + int(random_range * random.random())
             ey = ey + int(random_range * random.random())
         self.device.drag(sx, sy, ex, ey, duration)
+        time.sleep(duration + random.random())
 
 
 p_config = {'packageName': 'com.tencent.baiye', 'mainActivity': 'com.tencent.baiye.MainActivity', 'label': '白夜极光',

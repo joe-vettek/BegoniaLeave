@@ -73,3 +73,9 @@ def collect_mul_items(work_holder: work_flow.WorkFlow):
         random_sleep(extra_time=1)
         result = True
     return result
+
+
+# Todo:这里写一个函数，做a，然后直到b函数返回真
+def delay_checker(func_a, func_b):
+    while not func_b():
+        func_a()

@@ -33,13 +33,17 @@ for i in z.namelist():
         path = os.path.join("bin/mfw/maa", i.replace("binding/Python/maa/", ""))
     elif i.startswith("bin/"):
         path = os.path.join("bin/mfw/bin", i.replace("bin/", ""))
+    elif i.startswith("share/MaaAgentBinary"):
+        path = os.path.join("bin/mfw/agent", i.replace("share/MaaAgentBinary/", ""))
     if path:
         # path="bin/mfw"
         # path=os.path.normpath(path)
         # print(path,i)
         # z.extract(i,path)
-        if not os.path.exists(os.path.dirname(path)):
-            os.mkdir(os.path.dirname(path))
+        # 也许会有更好的方法判断路径，但是由于我们目前的路径都是多层的
+        # if not os.path.exists(os.path.dirname(path)):
+        if path.endswith('/') or path.endswith('\\'):
+            os.makedirs(os.path.dirname(path))
         if os.path.isdir(path):
             print(path)
             continue

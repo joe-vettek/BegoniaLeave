@@ -11,13 +11,13 @@ def clear_energy(work_holder: work_flow.WorkFlow):
     utils.random_sleep()
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_BATTLE_COMMON), 6, 0.5)
     utils.random_sleep()
-    utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_BATTLE_COMMON_EXPERIENCE), 6, 0.5)
+    utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_BATTLE_COMMON_GOLD), 6, 0.5)
     utils.random_sleep()
     # 目前不做选关
     time.sleep(1)
     # 这个滑动属于没办法，当然也可以后续做检测，不过目前没必要
-    for i in range(3):
-        work_holder.drag(640,500,641,100,0.5,random_use=True)
+    utils.delay_checker(lambda: work_holder.drag(640, 500, 641, 100, 0.5, random_use=True),
+                        lambda: work_holder.if_exists(streamlist.IMAGE_BATTLE_AUTO))
     log.printLog("进行自动扫荡")
     utils.random_sleep(extra_time=1)
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_BATTLE_AUTO), 6, 0.5)
@@ -33,7 +33,6 @@ def clear_energy(work_holder: work_flow.WorkFlow):
     time.sleep(1)
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_COMMON_HOME), 15, 0.5)
     time.sleep(1)
-
 
 # # 测试代码
 # a = work_flow.WorkFlow()
