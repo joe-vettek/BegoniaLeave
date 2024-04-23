@@ -3,6 +3,7 @@ import logging
 import os
 import signal
 import sys
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, BackgroundTasks, Request
 from uvicorn import Config, Server
@@ -19,7 +20,7 @@ import uvicorn
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import modules
-from core import work_flow, log, screen_locator, file_locator,config
+from core import work_flow, log, screen_locator, file_locator, config
 
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,7 +50,34 @@ def set_none():
     work_flow_holder = None
 
 
-app = FastAPI()
+# @app.on_event("shutdown")
+async def shutdown_event():
+    print("Performing clean shutdown...")
+    screen_locator.cancel_instance()
+    # global  loop
+    # loop=None
+    if loop:
+        loop.stop()
+        loop.close()
+    # if tasks:
+    #     for i in tasks:
+    #         print(i.done())
+    # loop.stop()
+    #
+    # loop.close()
+    os.kill(os.getpid(), signal.SIGTERM)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Load the ML model
+    pass
+    yield
+    # Clean up the ML models and release the resources
+    await shutdown_event()
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.mount("/main", StaticFiles(directory="webapp"), name="main")
 
@@ -160,24 +188,6 @@ async def close():
     server.should_exit = True
     # await server.shutdown()
     # return []
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    print("Performing clean shutdown...")
-    screen_locator.cancel_instance()
-    # global  loop
-    # loop=None
-    if loop:
-        loop.stop()
-        loop.close()
-    # if tasks:
-    #     for i in tasks:
-    #         print(i.done())
-    # loop.stop()
-    #
-    # loop.close()
-    os.kill(os.getpid(), signal.SIGTERM)
 
 
 UVICORN_LOGGING_CONFIG: dict = uvicorn.config.LOGGING_CONFIG

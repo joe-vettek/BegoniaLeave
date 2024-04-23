@@ -1,21 +1,41 @@
 import os.path
 import re
+import sys
 
 import requests
 import json
 import zipfile
 
-url = "https://api.github.com/repos/MaaXYZ/MaaFramework/actions/artifacts"
-response = requests.get(url)
-info = [i for i in json.loads(response.text)["artifacts"] if "win-x86" in i["name"]][0]
-print(json.dumps(info))
+
+# url = "https://api.github.com/repos/MaaXYZ/MaaFramework/actions/artifacts"
+# response = requests.get(url)
+# info = [i for i in json.loads(response.text)["artifacts"] if "win-x86" in i["name"]][0]
+# print(json.dumps(info))
+def get_all_releases(repo_owner, repo_name):
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        return None
+
+
+repo_owner = "MaaXYZ"
+repo_name = "MaaFramework"
+all_releases = get_all_releases(repo_owner, repo_name)
+as_list = all_releases[0]['assets']
+zip_info = [i for i in as_list if 'win-x86_64' in i["name"]][0]
+
+# print(zip_info)
+# sys.exit(0)
 # response = requests.get(info["archive_download_url"])
 if not os.path.exists('cache'):
     os.mkdir('cache')
-print(name := "cache/{}.zip".format(info["name"]))
+print(name := "cache/{}".format(zip_info["name"]))
 
 if not os.path.exists(name):
-    response = requests.get('https://github.com/MaaXYZ/MaaFramework/releases/download/v1.6.5/MAA-win-x86_64-v1.6.5.zip')
+    response = requests.get(zip_info["browser_download_url"])
     with open(name, "wb") as file:
         file.write(response.content)
 
@@ -24,7 +44,6 @@ if not os.path.exists(name):
 #         os.remove("bin/mfw")
 # except PermissionError:
 #     print("权限错误")
-
 z = zipfile.ZipFile(name, 'r')
 for i in z.namelist():
 
@@ -43,7 +62,8 @@ for i in z.namelist():
         # 也许会有更好的方法判断路径，但是由于我们目前的路径都是多层的
         # if not os.path.exists(os.path.dirname(path)):
         if path.endswith('/') or path.endswith('\\'):
-            os.makedirs(os.path.dirname(path))
+            if not os.path.exists(os.path.dirname(path)):
+                os.makedirs(os.path.dirname(path))
         if os.path.isdir(path):
             print(path)
             continue
@@ -95,4 +115,3 @@ for i in z.namelist():
 # os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding/Python/maa')))
 # os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding/Python')))
 # os.system('rd "{}"'.format(os.path.realpath('bin/mfw/binding')))
-

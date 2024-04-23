@@ -7,7 +7,8 @@ from typing import Union
 import adbutils
 import uiautomator2 as u2
 
-from core import file_locator, screen_locator, log, config, _screen_locator as screen_locator
+from core import file_locator, screen_locator, log, config\
+    # , _screen_locator as screen_locator
 
 package_name = "com.tencent.baiye"
 

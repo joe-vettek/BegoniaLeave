@@ -140,7 +140,7 @@ window.onload = () => {
 			if (response.ok) {
 				document.getElementById("dialogOverlay").style.display = "none";
 			} else {
-				alert('后台服务似乎未启动。');
+				alert('后台服务似乎未启动或者未运行过。');
 			}
 		});
 	});

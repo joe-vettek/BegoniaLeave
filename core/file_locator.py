@@ -49,11 +49,14 @@ def get_adb_name():
 
 
 def get_device():
-    return normpath(join(get_cache_dir(), 'device'))
+    device_path = normpath(join(get_cache_dir(), 'device'))
+    if not os.path.exists(device_path):
+        save_json(device_path, [{"address": "127.0.0.1:5555"}])
+    return device_path
 
 
 def get_mfw_bin():
-    return normpath(join(get_root(),  'bin', 'mfw', 'bin'))
+    return normpath(join(get_root(), 'bin', 'mfw', 'bin'))
 
 
 def get_mfw_res():
@@ -61,7 +64,7 @@ def get_mfw_res():
 
 
 def get_mfw_agent():
-    return normpath(join(get_root(),'bin', 'mfw', 'agent'))
+    return normpath(join(get_root(), 'bin', 'mfw', 'agent'))
 
 
 def load_text(file, encode="utf-8"):
