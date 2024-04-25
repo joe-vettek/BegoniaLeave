@@ -49,7 +49,7 @@ window.onload = () => {
 	check_lines.forEach(check_line => {
 		// const checkbox = ;
 		check_line.addEventListener('click', (e) => {
-			if (e.srcElement.type != "checkbox") {
+			if (e.srcElement.type != "checkbox"&&e.srcElement.type != "label") {
 				let checkbox = check_line.children[0];
 				checkbox.checked = !checkbox.checked;
 			}

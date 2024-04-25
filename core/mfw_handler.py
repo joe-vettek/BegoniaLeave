@@ -126,10 +126,10 @@ async def init_adb(retry=False):
         adb_path=device.adb_path,
         address=device.address,
         agent_path=file_locator.get_mfw_agent(),
-        # type =   (
-        #         MaaAdbControllerTypeEnum.Input_Preset_AutoDetect
-        #         | MaaAdbControllerTypeEnum.Screencap_FastestWay
-        # )
+        type =   (
+                MaaAdbControllerTypeEnum.Input_Preset_AutoDetect
+                | MaaAdbControllerTypeEnum.Screencap_Encode
+        )
     )
     await controller.connect()
     # print(controller)

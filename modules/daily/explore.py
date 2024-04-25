@@ -33,7 +33,7 @@ def harvest_and_explore(work_holder: work_flow.WorkFlow):
 
     log.printLog("正在前往探险")
     utils.create_limited_action(lambda: work_holder.click_if_exists(streamlist.IMAGE_FOUNDATION_EXPLORE))
-    utils.random_sleep(1.5,extra_time=0.5)
+    utils.random_sleep(1.5,extra_time=1.5)
 
     # 假如需要领取东西的话，多检查几次
     log.printLog("检查是否有探险完成")
