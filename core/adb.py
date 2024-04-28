@@ -80,6 +80,9 @@ class AdbConnector:
         #     # 目前这个检测有点问题
         #     self.device = u2.connect_adb_wifi("127.0.0.1:5555")
         self.device = u2.connect_adb_wifi(config.adb_path)
+        self.device.__init__(config.adb_path)
+
+
 
     def set_device(self):
         holder = adbutils.AdbClient(host="127.0.0.1", port=5037)
